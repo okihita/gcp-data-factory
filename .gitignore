@@ -1,4 +1,18 @@
+# Local Terraform directories
 .terraform/
+
+# .tfstate files
 *.tfstate
 *.tfstate.backup
+.tfstate.lock.info
+
+# Crash log files
+crash.log
+
+# Secret files
 *.tfvars
+*.auto.tfvars
+
+# Exclude all .tfvars files, but re-include a "safe" one
+# (This is an advanced pattern, you can omit this)
+!example.tfvars
