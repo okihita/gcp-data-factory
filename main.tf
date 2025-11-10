@@ -13,10 +13,16 @@ provider "google" {
 }
 
 # 1. GCS (like S3)
-resource "google_storage_bucket" "data_landing_zone" {
-  name          = "${var.project_id}-data-landing-zone"
+resource "google_storage_bucket" "g-cav-raw-data-prod" {
+  name          = "${var.project_id}-raw-data-prod"
   location      = "US" # Multi-region for high availability
   force_destroy = true # Good for hackathons, allows easy deletion
+}
+
+resource "google_storage_bucket" "g-cav-data-packages-prod" {
+  name          = "${var.project_id}-data-packages-prod"
+  location      = "US"
+  force_destroy = true
 }
 
 # 2. Pub/Sub (like SNS/EventBridge)
