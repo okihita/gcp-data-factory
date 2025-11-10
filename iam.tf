@@ -65,3 +65,11 @@ resource "google_project_iam_member" "cloudbuild_agent_token_creator" {
   role    = "roles/iam.serviceAccountTokenCreator"
   member  = "serviceAccount:service-${data.google_project.project.number}@gcp-sa-cloudbuild.iam.gserviceaccount.com"
 }
+
+# 6. Allow Cloud Build SA to READ from any Artifact Registry
+#    This is required to pull the base builder images
+resource "google_project_iam_member" "cloudbuild_ar_reader" {
+  project = data.google_project.project.project_id
+  role    = "roles/artifactregistry.reader"
+  member  = google_service_account.cloudbuild_sa.member
+}
