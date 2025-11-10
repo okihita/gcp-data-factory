@@ -63,3 +63,11 @@ resource "google_sql_user" "data_processor_user" {
   instance = google_sql_database_instance.master_db_instance.name
   password = var.db_password
 }
+
+# 4. Docker repo
+resource "google_artifact_registry_repository" "docker_repo" {
+  location      = "us-central1" # Or your chosen region
+  repository_id = "g-cav-repo"
+  description   = "Docker repository for G-CAV project"
+  format        = "DOCKER"
+}
