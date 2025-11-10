@@ -16,4 +16,7 @@ crash.log
 # Exclude all .tfvars files, but re-include a "safe" one
 # (This is an advanced pattern, you can omit this)
 !example.tfvars
+
 graph.png
+
+.idea
