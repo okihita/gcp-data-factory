@@ -1,38 +1,35 @@
-# This is the CICD pipeline for the application deployment
-
 steps:
-  # 1. Build the container image
-  - name: 'us-central1-docker.pkg.dev/cloud-builders/docker'
+  # 1. Build the container image using the official Docker Hub 'docker' image
+  - name: 'docker'
     args:
       [
         'build',
         '-t',
         'us-central1-docker.pkg.dev/${PROJECT_ID}/g-cav-repo/data-processor-job:latest',
-        './data-processor-job', # Assumes your job's code is in this folder
+        './data-processor-job',
       ]
 
   # 2. Push the container image to Artifact Registry
-  - name: 'us-central1-docker.pkg.dev/cloud-builders/docker'
+  - name: 'docker'
     args:
       [
         'push',
         'us-central1-docker.pkg.dev/${PROJECT_ID}/g-cav-repo/data-processor-job:latest',
       ]
 
-  # 3. Deploy the new image to the Cloud Run Job
-  # This step *updates* the job to use the new container
-  - name: 'us-central1-docker.pkg.dev/cloud-builders/gcloud'
+  # 3. Deploy the new image using the official Docker Hub 'google/cloud-sdk' image
+  - name: 'google/cloud-sdk:latest'
     entrypoint: 'gcloud'
     args:
       [
         'run',
         'jobs',
         'update',
-        'data-processor-job', # The name of your job
+        'data-processor-job',
         '--image',
         'us-central1-docker.pkg.dev/${PROJECT_ID}/g-cav-repo/data-processor-job:latest',
         '--region',
-        'us-central1', # Use the same region as your other services
+        'us-central1',
         '--service-account',
         'data-processor-sa@${PROJECT_ID}.iam.gserviceaccount.com',
       ]
